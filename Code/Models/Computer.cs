@@ -7,7 +7,9 @@ namespace Datacenter.Code
         public int Benchmark { get; private set; }
         public decimal Price { get; private set; }
 
-        public decimal Score => Benchmark / Price;
+        public decimal Score => Math.Round(Benchmark / Price, 4);
+
+        public Computer() { }
 
         public Computer(int benchmark, int price)
         {
@@ -27,11 +29,10 @@ namespace Datacenter.Code
 
         public void Parse(string[] dataArray)
         {
-            var dateValues = dataArray[0].Split('.');
             try
             {
-                Benchmark = int.Parse(dateValues[0]);
-                Price = decimal.Parse(dateValues[1]);
+                Benchmark = int.Parse(dataArray[0]);
+                Price = decimal.Parse(dataArray[1]);
             }
             catch (Exception ex)
             {
@@ -42,6 +43,12 @@ namespace Datacenter.Code
         public bool Equals(Computer other)
         {
             return Price.Equals(other.Price);
+        }
+
+        public override string ToString()
+        {
+            // return $"B: {Benchmark} P: {Price}";
+            return Score.ToString();
         }
     }
 }
