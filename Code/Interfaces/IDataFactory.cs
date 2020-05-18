@@ -1,6 +1,9 @@
-public interface IDataFactory<T>
+namespace Datacenter.Code
 {
-    T GenerateEntry();
+    public interface IDataFactory<T>
+    {
+        T GenerateEntry();
 
-    T[] GenerateEntries(int count);
+        T[] GenerateEntries(int count);
+    }
 }
