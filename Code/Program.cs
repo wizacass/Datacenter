@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Datacenter.Code
 {
     class Program
     {
-        private const int Generations = 6;
+        private const int Generations = 8;
 
         private readonly IDataFactory<Computer> _factory;
 
@@ -24,8 +24,15 @@ namespace Datacenter.Code
                 Console.WriteLine($"Entries: {entriesCount}");
                 var data = _factory.GenerateEntries(entriesCount);
 
-                Console.WriteLine("Running...");
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                var sw = new Stopwatch();
+                sw.Start();
                 var result = Optimiser.FindMaxScore(data, budget);
+                sw.Stop();
+
+                Console.WriteLine($"Solution found in {sw.ElapsedMilliseconds.ToString()}ms");
                 Console.WriteLine($"Total efficiency: {result.Item1}");
                 Console.WriteLine($"Total price: {result.Item2}");
                 Console.WriteLine($"Leftover: {budget - result.Item2}");
