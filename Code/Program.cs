@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Datacenter
+namespace Datacenter.Code
 {
     class Program
     {
